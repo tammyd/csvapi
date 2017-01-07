@@ -1,0 +1,12 @@
+{
+    "require": {
+        "silex/silex": "~2.0",
+        "symfony/var-dumper": "^3.2",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CSVAPI\\": "src/"
+        }
+    }
+}
