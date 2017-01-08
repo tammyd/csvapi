@@ -15,4 +15,13 @@ class ArrayUtils
         return $default;
     }
 
+    public static function serializeArrayValues($arr){
+        foreach($arr as $key=>$val){
+            $arr[$key]=serialize($val);
+        }
+
+        return $arr;
+    }
+
+
 }

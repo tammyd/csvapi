@@ -44,7 +44,8 @@ class ServiceController extends BaseController
             ->setSource((string) $request->query->get('source'))
             ->setSourceFormat((string) $request->query->get('format'))
             ->setSort((string) $request->query->get('sort'))
-            ->setSortDir((string) $request->query->get('sortDir'));
+            ->setSortDir((string) $request->query->get('sortDir'))
+            ->setFilter((string) $request->query->get('filter'));
 
     }
 }
