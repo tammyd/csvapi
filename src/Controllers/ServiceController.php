@@ -34,9 +34,6 @@ class ServiceController extends BaseController
         return $response;
     }
 
-
-
-
     protected function initServiceFromRequest(Request $request) {
 
         //@TODO - validate these inputs

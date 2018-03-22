@@ -55,13 +55,14 @@ class Service
     }
 
     /**
-     * @return array
+     * Main function that does all the work; reading and parsing of input, sorting and filtering
+     *
+     * @return array            Array of records
      * @throws NoDataException
      * @throws NotImplementedException
      */
     public function getData() {
 
-        $result = [];
         $data = $this->readDataFromSource([]);
         if (!$data) {
             throw new NoDataException();
@@ -71,6 +72,7 @@ class Service
             case 'csv':
                 $result = $this->parseCSVString($data); break;
             default:
+                //@TODO - eventually support other input formats.
                 throw new NotImplementedException($this->getSourceFormat() . " source format not implemented");
         }
 
@@ -82,8 +84,10 @@ class Service
     }
 
     /**
-     * @param string $data
-     * @return array
+     * Parse the raw CSV string.
+     *
+     * @param string $data  Input csv data
+     * @return array        Associative array of csv records
      */
     protected function parseCSVString($data) {
         $data = CSVUtils::normalizeLineEndings($data);
@@ -104,17 +108,17 @@ class Service
     }
 
     /**
-     * @param array $row
-     * @param string $key
-     * @param array $header
+     * @param array $row        CSV Row
+     * @param string $key       Array index; not used but required for array functions
+     * @param array $header     Array of csv column headers
      */
     protected function mergeHeader(array &$row, $key, array $header) {
         $row = array_combine($header, $row);
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param array $data   Row of CSV records to sort using stored sort column
+     * @return array        Sorted results
      */
     protected function sortData(array $data = []) {
 
@@ -136,12 +140,11 @@ class Service
         });
 
         return $data;
-
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param array $data   Row of CSV records to filter using stored filter equation
+     * @return array        Filtered results
      */
     protected function filterData(array $data = []) {
 
@@ -175,7 +178,6 @@ class Service
         }
 
         return $prevResult;
-
     }
 
     /**
@@ -203,17 +205,19 @@ class Service
 
         return [$result, $comps];
 
-
     }
 
 
     /**
-     * @param $data
-     * @param $filter
+     * Filters data based on a single comparator.
+     * Compares and returns values that match filter statement
+     *
+     * @param array $data       Input column to filter
+     * @param string $filter    Filter string
      * @return array
      * @throws InvalidFilterException
      */
-    protected function singleDataFilter($data, $filter) {
+    protected function singleDataFilter(array $data, $filter) {
 
         // Supports <, <=, =, >=, >, !=
         $matches = [];

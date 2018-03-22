@@ -2,13 +2,16 @@
 
 namespace CSVAPI\Utils;
 
+/**
+ * Class CSVUtils
+ * @package CSVAPI\Utils
+ */
 class CSVUtils
 {
-
     /**
-     * Normalize all line endings to Unix line endings
-     * @param string the mixed-ending string to normalized
-     * @return string the normalized string
+     * Normalize all    line endings to Unix line endings
+     * @param $string   the mixed-ending string to normalized
+     * @return string   the normalized string
      */
     public static function normalizeLineEndings($string) {
         $search = ["\r\n", "\r"];
@@ -16,3 +19,5 @@ class CSVUtils
         return str_replace($search, $replace, $string);
     }
 }
+
+
